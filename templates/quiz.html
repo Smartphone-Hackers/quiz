@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load poll_extras %}
+{% block headername %}
+    Quiz - {{ username }}
+{% endblock %}
+{% block content %}
+<div class="container">
+    <br> <br>
+    {% for question in question_page %}
+        <p class="fs-1">Topic - {{ question.category }} | Difficulty - {{ question.difficulty }}</p>
+        <hr>
+        <form id="question-form">
+            <label for="" class="fs-2">{{question.question}}</label>
+            {% for option in question.options|split:"," %}
+                {% if question.clicked == 1 %}
+                    {% if question.correct_answer == question.click_data %}
+                        {% if option|stripped == question.click_data %}
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="question-id" style="background-color: green;" disabled>
+                                <label class="form-check-label {{question.id}}" id="radio-label" for="flexRadioDefault1">
+                                {{ option }}
+                                </label>
+                            </div>
+                        {% else %}
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="question-id" disabled>
+                                <label class="form-check-label {{question.id}}" id="radio-label" for="flexRadioDefault1">
+                                {{ option }}
+                                </label>
+                            </div>
+                        {% endif %}
+                    {% elif question.correct_answer != question.click_data %}
+                        {% if option|stripped == question.click_data %}
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="question-id" style="background-color: red;" disabled>
+                                <label class="form-check-label {{question.id}}" id="radio-label" for="flexRadioDefault1">
+                                {{ option }}
+                                </label>
+                            </div>
+                        {% elif option|stripped == question.correct_answer %}
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="question-id" style="background-color: green;" disabled>
+                                <label class="form-check-label {{question.id}}" id="radio-label" for="flexRadioDefault1">
+                                {{ option }}
+                                </label>
+                            </div>
+                        {% else %}
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="question-id" disabled>
+                                <label class="form-check-label {{question.id}}" id="radio-label" for="flexRadioDefault1">
+                                {{ option }}
+                                </label>
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                {% else %}
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="question-id" required>
+                        <label class="form-check-label {{question.id}}" id="radio-label" for="flexRadioDefault1">
+                        {{ option }}
+                        </label>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </form>
+    {% endfor %}
+    
+    {% if question_page.has_previous %}
+        <a href="?page={{question_page.previous_page_number}}" class="mb-2 mr-2 btn btn-primary"> << Previous</a>
+    {% endif %}
+    {% if question_page.has_next %}
+        <a href="?page={{question_page.next_page_number}}" class="mb-2 mr-2 btn btn-primary">Next >></a>
+    {% endif %}
+    <br>
+    <hr>
+    {% if question_page.number == 3 %}
+        <a href="{% url 'submit-test' %}" class="btn btn-primary">Submit Status</a>
+    {% endif %}
+</div>
+{% endblock %}  

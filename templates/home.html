@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block headername %}
+    Quiz - {{ username }}
+{% endblock %}
+{% block content %}
+    <br> <br>
+    <div class="container">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-success" role="alert">    
+                   {{message}}
+                </div>
+            {% endfor %}
+        {% endif %}
+        <form method="POST">
+            <p class="fs-1">Start Your Quiz</p>
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Select Category</label>
+                <select class="form-select" aria-label="Default select example" name="category">
+                    <option selected>Select Category</option>
+                    <option value="9">General Knowledge</option>
+                    <option value="10">Books</option>
+                    <option value="11">Film</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Select Difficulty</label>
+                <select class="form-select" aria-label="Default select example" name="difficulty">
+                    <option selected>Select Difficulty</option>
+                    <option value="easy">Easy</option>
+                    <option value="medium">Medium</option>
+                    <option value="hard">Hard</option>
+                </select>
+            </div>
+
+            <input type="submit" class="btn btn-primary" value="Start Quiz">
+            <a href="{% url 'results' %}" class="btn btn-success">Your Quiz Result</a>
+        </form>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block headername %}
+    Quiz - {{ username }}
+{% endblock %}
+{% block content %}
+<div class="container">
+    <br> <br>
+    <p class="fs-1">Quiz Result</p>
+    <hr>
+    <table class="table table-borderless">
+        <thead>
+          <tr>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Name</td>
+            <td>{{username}}</td>
+          </tr>
+          <tr>
+            <td>Total Questions</td>
+            <td>{{total_questions}}</td>
+          </tr>
+          <tr>
+            <td>Correct Answer</td>
+            <td>{{right_answer}}</td>
+          </tr>
+          <tr>
+            <td>Wrong Answer</td>
+            <td>{{wrong_answer}}</td>
+          </tr>
+          <tr>
+            <td>Total Time</td>
+            <td>{{total_time}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <hr> <br>
+      <a href="{% url 'try-again' %}" class="btn btn-primary">Try Again</a>
+</div>
+{% endblock %}

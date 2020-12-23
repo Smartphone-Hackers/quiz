@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <br> <br>
+    {% if form_error %}
+        <div class="alert alert-danger" role="alert">
+            {{form_error}}
+        </div>
+    {% endif %}
+    <form method="POST">
+        {% csrf_token %}
+        <p class="fs-1">Login</p>
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Student Name</label>
+          <!-- <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"> -->
+            {{ form.username }}
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Password</label>
+          <!-- <input type="password" class="form-control" id="exampleInputPassword1"> -->
+            {{ form.password }}
+        </div>
+
+        <input type="submit" class="btn btn-primary" value="Login">
+        <a href="{% url 'register' %}" class="btn btn-primary">Register</a>
+    </form>
+</div>
+{% endblock %}
